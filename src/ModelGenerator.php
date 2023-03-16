@@ -305,13 +305,14 @@ class ModelGenerator
 
                         if ($return instanceof Relation) {
 
-                            $name = Str::snake($methodName);
+//                            $name = Str::snake($methodName);
+                            $name = $methodName;
                             if ($return instanceof HasOne || $return instanceof BelongsTo || $return instanceof MorphOne || $return instanceof HasOneThrough) {
                                 $this->addProperty($name, get_class($return->getModel()), true, null);
                             }
 
                             if ($return instanceof HasMany || $return instanceof HasManyThrough || $return instanceof BelongsToMany) {
-                                $this->addProperty($name, get_class($return->getModel()) . "[]", true, null);
+                                $this->addProperty($name, '\think\Collection|'.get_class($return->getModel()) . "[]", true, null);
                             }
 
                             if ($return instanceof MorphTo || $return instanceof MorphMany) {
